@@ -1,0 +1,16 @@
+.private
+.project
+.classpath
+.settings
+.gradle
+.DS_Store
+videos
+bin
+build
+
+
+# Intellij
+.idea/
+*.iml
+*.iws
+build/
