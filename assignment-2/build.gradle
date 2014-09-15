@@ -35,6 +35,14 @@ repositories {
     }
 }
 
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', 'src/test/java']
+        }
+    }
+}
+
 dependencies {
 
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
