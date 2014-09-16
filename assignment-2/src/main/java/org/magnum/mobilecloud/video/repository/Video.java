@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple object to represent a video and its URL for viewing.
@@ -32,6 +34,7 @@ public class Video {
 	private String url;
 	private long duration;
 	private long likes;
+    private List<String> usersWhoLikedVideo = new ArrayList<>();
 	
 	public Video() {
 	}
@@ -83,6 +86,35 @@ public class Video {
 	public void setLikes(long likes) {
 		this.likes = likes;
 	}
+
+    public boolean likeVideo(String username) {
+        for (String user : usersWhoLikedVideo) {
+            if (user.equals(username)) {
+                return false;
+            }
+        }
+
+        usersWhoLikedVideo.add(username);
+        likes++;
+
+        return true;
+    }
+
+    public boolean unlikeVideo(String username) {
+        for (String user : usersWhoLikedVideo) {
+            if (user.equals(username)) {
+                usersWhoLikedVideo.remove(username);
+                likes--;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public List<String> getUsersWhoLikedVideo() {
+        return usersWhoLikedVideo;
+    }
 	
 	/**
 	 * Two Videos will generate the same hashcode if they have exactly the same
