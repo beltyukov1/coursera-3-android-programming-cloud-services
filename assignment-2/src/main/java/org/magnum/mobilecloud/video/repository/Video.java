@@ -2,10 +2,7 @@ package org.magnum.mobilecloud.video.repository;
 
 import com.google.common.base.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +31,8 @@ public class Video {
 	private String url;
 	private long duration;
 	private long likes;
+
+    @ElementCollection
     private List<String> usersWhoLikedVideo = new ArrayList<>();
 	
 	public Video() {

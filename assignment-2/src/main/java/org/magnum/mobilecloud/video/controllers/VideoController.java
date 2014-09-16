@@ -32,56 +32,56 @@ public class VideoController {
     }
 
     @RequestMapping(value=VideoSvcApi.VIDEO_SVC_PATH + "/{id}", method=RequestMethod.GET)
-    public @ResponseBody Video getVideoById(@PathVariable("id") long id, HttpResponse response) {
+    public @ResponseBody Video getVideoById(@PathVariable long id, HttpServletResponse response) {
         Video video = videoRepository.findOne(id);
 
         if (video == null) {
-            response.setStatusCode(HttpServletResponse.SC_NOT_FOUND);
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
 
         return video;
     }
 
     @RequestMapping(value=VideoSvcApi.VIDEO_SVC_PATH + "/{id}/like", method=RequestMethod.POST)
-    public void likeVideo(@PathVariable("id") long id, HttpResponse response, Principal principal) {
+    public void likeVideo(@PathVariable long id, HttpServletResponse response, Principal principal) {
         Video video = videoRepository.findOne(id);
 
         if (video == null) {
-            response.setStatusCode(HttpServletResponse.SC_NOT_FOUND);
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
 
         boolean isLikeSuccessful = video.likeVideo(principal.getName());
         if (isLikeSuccessful) {
-            response.setStatusCode(HttpServletResponse.SC_OK);
+            response.setStatus(HttpServletResponse.SC_OK);
         } else {
-            response.setStatusCode(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
 
     @RequestMapping(value=VideoSvcApi.VIDEO_SVC_PATH + "/{id}/unlike", method=RequestMethod.POST)
-    public void unlikeVideo(@PathVariable("id") long id, HttpResponse response, Principal principal) {
+    public void unlikeVideo(@PathVariable long id, HttpServletResponse response, Principal principal) {
         Video video = videoRepository.findOne(id);
 
         if (video == null) {
-            response.setStatusCode(HttpServletResponse.SC_NOT_FOUND);
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
 
         boolean isUnlikeSuccessful = video.unlikeVideo(principal.getName());
         if (isUnlikeSuccessful) {
-            response.setStatusCode(HttpServletResponse.SC_OK);
+            response.setStatus(HttpServletResponse.SC_OK);
         } else {
-            response.setStatusCode(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
 
     @RequestMapping(value=VideoSvcApi.VIDEO_SVC_PATH + "/{id}/likedby", method=RequestMethod.GET)
-    public @ResponseBody List<String> getUsersWhoLikedVideo(@PathVariable("id") long id, HttpResponse response) {
+    public @ResponseBody List<String> getUsersWhoLikedVideo(@PathVariable long id, HttpServletResponse response) {
         Video video = videoRepository.findOne(id);
 
         if (video == null) {
-            response.setStatusCode(HttpServletResponse.SC_NOT_FOUND);
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return null;
         }
 
