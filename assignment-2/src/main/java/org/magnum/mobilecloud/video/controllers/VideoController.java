@@ -53,6 +53,7 @@ public class VideoController {
 
         boolean isLikeSuccessful = video.likeVideo(principal.getName());
         if (isLikeSuccessful) {
+            videoRepository.save(video);
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -70,6 +71,7 @@ public class VideoController {
 
         boolean isUnlikeSuccessful = video.unlikeVideo(principal.getName());
         if (isUnlikeSuccessful) {
+            videoRepository.save(video);
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -86,5 +88,15 @@ public class VideoController {
         }
 
         return video.getUsersWhoLikedVideo();
+    }
+
+    @RequestMapping(value=VideoSvcApi.VIDEO_TITLE_SEARCH_PATH, method=RequestMethod.GET)
+    public @ResponseBody Collection<Video> findByTitle(@RequestParam(VideoSvcApi.TITLE_PARAMETER) String title) {
+        return videoRepository.findByName(title);
+    }
+
+    @RequestMapping(value=VideoSvcApi.VIDEO_DURATION_SEARCH_PATH, method=RequestMethod.GET)
+    public @ResponseBody Collection<Video> findByDurationLessThan(@RequestParam(VideoSvcApi.DURATION_PARAMETER) long duration) {
+        return videoRepository.findByDurationLessThan(duration);
     }
 }
